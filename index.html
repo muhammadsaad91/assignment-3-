@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // task 1
+
+        function addNumber(x) {
+  return function(y) {
+    return x + y;
+  }
+}
+
+const addFive = addNumber(5);
+console.log(addFive(10)); // Output: 15
+
+
+// task 2
+
+function searchArray(array, value) {
+  if (array.length === 0) {
+    return false;
+  } else if (array[0] === value) {
+    return true;
+  } else {
+    return searchArray(array.slice(1), value);
+  }
+}
+
+const myArray = [1, 2, 3, 4, 5];
+console.log(searchArray(myArray, 3)); // Output: true
+console.log(searchArray(myArray, 6)); // Output: false
+
+
+// task 3
+
+
+function addParagraph(text) {
+  const newParagraph = document.createElement("p");
+  const paragraphText = document.createTextNode(text);
+  newParagraph.appendChild(paragraphText);
+  document.body.appendChild(newParagraph);
+}
+
+addParagraph("This is a new paragraph.");
+
+
+
+// task 4
+
+
+function addListItem(text) {
+  const newListItem = document.createElement("li");
+  const listItemText = document.createTextNode(text);
+  newListItem.appendChild(listItemText);
+  const list = document.querySelector("ul");
+  list.appendChild(newListItem);
+}
+
+addListItem("New item");
+
+
+// task 5
+
+
+function changeBackgroundColor(element, color) {
+  element.style.backgroundColor = color;
+}
+
+const myElement = document.getElementById("myElement");
+changeBackgroundColor(myElement, "blue");
+
+
+
+// task 6 
+
+function saveToLocalStorage(key, object) {
+  localStorage.setItem(key, JSON.stringify(object));
+}
+
+const myObject1 = { name: "John", age: 30 };
+localStorage.setItem("myObject", JSON.stringify(myObject1));
+
+// task 7
+
+function getFromLocalStorage(key) {
+  const storedValue = localStorage.getItem(key);
+  return storedValue ? JSON.parse(storedValue) : null;
+}
+
+const myStoredObject = getFromLocalStorage("myObject");
+console.log(myStoredObject);
+
+
+// task 8
+
+
+function saveObjectToLocalStorage(object) {
+  for (const key in object) {
+    if (object.hasOwnProperty(key)) {
+      localStorage.setItem(key, JSON.stringify(object[key]));
+    }
+  }
+  const newObject = {};
+  for (const key in localStorage) {
+    if (localStorage.hasOwnProperty(key)) {
+      newObject[key] = JSON.parse(localStorage.getItem(key));
+    }
+  }
+  return newObject;
+}
+
+const myObject = { name: "John", age: 30 };
+const storedObject = saveObjectToLocalStorage(myObject);
+console.log(storedObject);
+
+    </script>
+</body>
+</html>
