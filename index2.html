@@ -86,7 +86,7 @@ button:hover {
                 <option value="Documentary">Documentary</option>
                 <option value="Sport">Sport</option>
                 <option value="Musical">Musical</option>
-                
+
             </select>
 			<label for="rating-select">Rating:</label>
 			<select id="rating-select">
@@ -143,7 +143,6 @@ button:hover {
     .then(response => response.json())
     .then(data => {
         
-        // filter data and display it on every change filter and only show filterred data on submit using ajax without reloading the page
         const form = document.getElementById('movie-form');
         const genreSelect = document.getElementById('genre-select');
         const ratingSelect = document.getElementById('rating-select');
@@ -154,7 +153,6 @@ button:hover {
         console.log(movies);
         console.log(filteredMovies);
 
-        // filter movies
         const filterMovies = () => {
             filteredMovies = movies.filter(movie => {
                 if(genreSelect.value && movie.genres[0] !== genreSelect.value){
@@ -172,10 +170,8 @@ button:hover {
             displayMovies();
         }
 
-        // display movies
 
         const displayMovies = () => {
-            // not all the html only movie part of it and form will remain same
             let html = '';
             filteredMovies.forEach(movie => {
                 html += `
@@ -184,6 +180,7 @@ button:hover {
                     <p>Overview: ${movie.overview}</p>
                     <p>Rating: ${movie.vote_average}</p>
                     <p>Year: ${movie.release_date.slice(0,4)}</p>
+                    <p>Genre: ${movie.genres[0]}</p>
                     <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" width="300px" alt="${movie.title}">
             
                 </div>
@@ -192,7 +189,6 @@ button:hover {
             container.innerHTML = html;
         }
 
-        // event listeners
         form.addEventListener('submit', e => {
             e.preventDefault();
             filterMovies();
