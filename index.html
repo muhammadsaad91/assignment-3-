@@ -1,124 +1,194 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<title>Movie Recommendation App</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+   <style>
+    .container {
+	margin: 0 auto;
+	max-width: 600px;
+	padding: 20px;
+}
+
+h1 {
+	text-align: center;
+}
+
+.movie{
+    background-color: #f1f1f1;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+    
+}
+form {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+label, select {
+	display: block;
+	margin: 10px 0;
+}
+
+select {
+	width: 100%;
+}
+
+button {
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #3e8e41;
+}
+
+   </style>
 </head>
 <body>
-    <script>
-        // task 1
+	<div class="container">
+		<h1>Movie Recommendation App</h1>
+		<form id="movie-form">
+			<label for="genre-select">Genre:</label>
+			<select id="genre-select">
+				<option value="">-- Select Genre --</option>
+				<option value="Action">Action</option>
+				<option value="Comedy">Comedy</option>
+				<option value="Drama">Drama</option>
+				<option value="Horror">Horror</option>
+				<option value="Sci-Fi">Sci-Fi</option>
+			</select>
+			<label for="rating-select">Rating:</label>
+			<select id="rating-select">
+				<option value="">-- Select Rating --</option>
+				<option value="8+">8+</option>
+				<option value="7+">7+</option>
+				<option value="6+">6+</option>
+				<option value="5+">5+</option>
+				<option value="4+">4+</option>
+				<option value="3+">3+</option>
+				<option value="2+">2+</option>
+				<option value="1+">1+</option>
+			</select>
+			<label for="year-select">Release Year:</label>
+			<select id="year-select">
+				<option value="">-- Select Release Year --</option>
+				<option value="2022">2022</option>
+				<option value="2021">2021</option>
+				<option value="2020">2020</option>
+				<option value="2019">2019</option>
+				<option value="2018">2018</option>
+				<option value="2017">2017</option>
+				<option value="2016">2016</option>
+				<option value="2015">2015</option>
+				<option value="2014">2014</option>
+				<option value="2013">2013</option>
+			</select>
+			<button type="submit">Get Recommendations</button>
+		</form>
+		
+	</div>
 
-        function addNumber(x) {
-  return function(y) {
-    return x + y;
-  }
-}
+<script>
+    fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
 
-const addFive = addNumber(5);
-console.log(addFive(10)); // Output: 15
+        // for loop all the data show in the html file postter geners title budget original_language etc
 
+        for (let i = 0; i < 10; i++) {
+            const movie = data[i];
+            console.log(movie);
+        //    create a div and append all the data in the div and make a class for the div and style it in css
 
-// task 2
+        const movieDiv = document.createElement('div');
+        movieDiv.classList.add('movie');
+     
+        // overview 
 
-function searchArray(array, value) {
-  if (array.length === 0) {
-    return false;
-  } else if (array[0] === value) {
-    return true;
-  } else {
-    return searchArray(array.slice(1), value);
-  }
-}
+        
+        // create a h3 tag and append the title in the h3 tag
+        const movieTitle = document.createElement('h1');
+        movieTitle.innerText =` ${movie.title}` ;
+        movieDiv.appendChild(movieTitle);
+        
+        const movieOverview = document.createElement('p');
+        movieOverview.innerText =` ${movie.overview}` ;
+        movieDiv.appendChild(movieOverview);
+        
+        // tagline 
+        // const movieTagline = document.createElement('p');
+        // movieTagline.innerText =` ${movie.tagline}` ;
+        // movieDiv.appendChild(movieTagline);
 
-const myArray = [1, 2, 3, 4, 5];
-console.log(searchArray(myArray, 3)); // Output: true
-console.log(searchArray(myArray, 6)); // Output: false
-
-
-// task 3
-
-
-function addParagraph(text) {
-  const newParagraph = document.createElement("p");
-  const paragraphText = document.createTextNode(text);
-  newParagraph.appendChild(paragraphText);
-  document.body.appendChild(newParagraph);
-}
-
-addParagraph("This is a new paragraph.");
-
-
-
-// task 4
-
-
-function addListItem(text) {
-  const newListItem = document.createElement("li");
-  const listItemText = document.createTextNode(text);
-  newListItem.appendChild(listItemText);
-  const list = document.querySelector("ul");
-  list.appendChild(newListItem);
-}
-
-addListItem("New item");
-
-
-// task 5
-
-
-function changeBackgroundColor(element, color) {
-  element.style.backgroundColor = color;
-}
-
-const myElement = document.getElementById("myElement");
-changeBackgroundColor(myElement, "blue");
-
-
-
-// task 6 
-
-function saveToLocalStorage(key, object) {
-  localStorage.setItem(key, JSON.stringify(object));
-}
-
-const myObject1 = { name: "John", age: 30 };
-localStorage.setItem("myObject", JSON.stringify(myObject1));
-
-// task 7
-
-function getFromLocalStorage(key) {
-  const storedValue = localStorage.getItem(key);
-  return storedValue ? JSON.parse(storedValue) : null;
-}
-
-const myStoredObject = getFromLocalStorage("myObject");
-console.log(myStoredObject);
-
-
-// task 8
+        // vote average 
+        const movieVoteAverage = document.createElement('p');
+        movieVoteAverage.innerText =`Rating: ${movie.vote_average}` ;
+        movieDiv.appendChild(movieVoteAverage);
+          
+        const movieBudget = document.createElement('p');
+        movieBudget.innerText =`Budget ${movie.budget}`;
+        movieDiv.appendChild(movieBudget);
+          
+        // original lanuage 
+        const movieOriginalLanguage = document.createElement('p');
+        movieOriginalLanguage.innerText =`Original Language: ${movie.original_language}`;
+        movieDiv.appendChild(movieOriginalLanguage);
 
 
-function saveObjectToLocalStorage(object) {
-  for (const key in object) {
-    if (object.hasOwnProperty(key)) {
-      localStorage.setItem(key, JSON.stringify(object[key]));
-    }
-  }
-  const newObject = {};
-  for (const key in localStorage) {
-    if (localStorage.hasOwnProperty(key)) {
-      newObject[key] = JSON.parse(localStorage.getItem(key));
-    }
-  }
-  return newObject;
-}
 
-const myObject = { name: "John", age: 30 };
-const storedObject = saveObjectToLocalStorage(myObject);
-console.log(storedObject);
+        const Genre = document.createElement('h3');
+        Genre.innerText =`Genre` ;
+        movieDiv.appendChild(Genre);
 
-    </script>
+
+        for (let i = 0; i < movie.genres.length; i++) {
+            const movieGenres = document.createElement('p');
+            movieGenres.innerText = movie.genres[i];
+            movieDiv.appendChild(movieGenres);
+        }
+
+        
+        // create a p tag and append the budget in the p tag
+
+        //   create a line break
+        const lineBreak = document.createElement('br');
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        movieDiv.appendChild(lineBreak);
+        
+
+
+        document.body.appendChild(movieDiv);
+
+        }
+    })
+    .catch(err => console.log(err));
+
+
+
+
+
+</script>
 </body>
 </html>
