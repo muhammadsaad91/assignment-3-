@@ -64,28 +64,45 @@ button:hover {
 		<form id="movie-form">
 			<label for="genre-select">Genre:</label>
 			<select id="genre-select">
-				<option value="">-- Select Genre --</option>
+				<option value="">All</option>
 				<option value="Action">Action</option>
 				<option value="Comedy">Comedy</option>
 				<option value="Drama">Drama</option>
 				<option value="Horror">Horror</option>
 				<option value="Sci-Fi">Sci-Fi</option>
-			</select>
+                <option value="Thriller">Thriller</option>
+                <option value="Romance">Romance</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Animation">Animation</option>
+                <option value="Crime">Crime</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Western">Western</option>
+                <option value="Family">Family</option>
+                <option value="History">History</option>
+                <option value="Music">Music</option>
+                <option value="War">War</option>
+                <option value="Biography">Biography</option>
+                <option value="Documentary">Documentary</option>
+                <option value="Sport">Sport</option>
+                <option value="Musical">Musical</option>
+
+            </select>
 			<label for="rating-select">Rating:</label>
 			<select id="rating-select">
-				<option value="">-- Select Rating --</option>
-				<option value="8+">8+</option>
-				<option value="7+">7+</option>
-				<option value="6+">6+</option>
-				<option value="5+">5+</option>
-				<option value="4+">4+</option>
-				<option value="3+">3+</option>
-				<option value="2+">2+</option>
-				<option value="1+">1+</option>
+				<option value="">All</option>
+				<option value="8">8+</option>
+				<option value="7">7+</option>
+				<option value="6">6+</option>
+				<option value="5">5+</option>
+				<option value="4">4+</option>
+				<option value="3">3+</option>
+				<option value="2">2+</option>
+				<option value="1">1+</option>
 			</select>
 			<label for="year-select">Release Year:</label>
 			<select id="year-select">
-				<option value="">-- Select Release Year --</option>
+				<option value="">All</option>
 				<option value="2022">2022</option>
 				<option value="2021">2021</option>
 				<option value="2020">2020</option>
@@ -96,114 +113,99 @@ button:hover {
 				<option value="2015">2015</option>
 				<option value="2014">2014</option>
 				<option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>  
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+                <option value="2000">2000</option>
+                <option value="1999">1999</option>
+
 			</select>
 			<button type="submit">Get Recommendations</button>
 		</form>
 		
+     <div class="saad">
+
+     </div>
+
 	</div>
 
 <script>
     fetch('data.json')
     .then(response => response.json())
     .then(data => {
-
-
-
-        const movieForm = document.getElementById('movie-form');
         
+        const form = document.getElementById('movie-form');
+        const genreSelect = document.getElementById('genre-select');
+        const ratingSelect = document.getElementById('rating-select');
+        const yearSelect = document.getElementById('year-select');
+        const container = document.querySelector('.saad');
+        const movies = data;
+        let filteredMovies = movies;
+        console.log(movies);
+        console.log(filteredMovies);
 
-
-
-        for (let i = 0; i < data.length; i++) {
-            const movie = data[i];
-            console.log(movie);
-
-        const movieDiv = document.createElement('div');
-        movieDiv.classList.add('movie');
-     
-
-        
-        const movieTitle = document.createElement('h1');
-        movieTitle.innerText =` ${movie.title}` ;
-        movieDiv.appendChild(movieTitle);
-        
-        const movieOverview = document.createElement('p');
-        movieOverview.innerText =` ${movie.overview}` ;
-        movieDiv.appendChild(movieOverview);
-        
-        
-        
-        const movieReleaseDate = document.createElement('p');
-        movieReleaseDate.innerText =`Release Date: ${movie.release_date}`;
-        movieDiv.appendChild(movieReleaseDate);
-
-        const movieReleaseyear = document.createElement('p');
-        movieReleaseyear.innerText =`Release Year: ${movie.release_date.slice(0,4)}`;
-        movieDiv.appendChild(movieReleaseyear);
-
-        const movieVoteAverage = document.createElement('p');
-        movieVoteAverage.innerText =`Rating: ${movie.vote_average}` ;
-        movieDiv.appendChild(movieVoteAverage);
-          
-        const movieBudget = document.createElement('p');
-        movieBudget.innerText =`Budget ${movie.budget}`;
-        movieDiv.appendChild(movieBudget);
-          
-        const movieOriginalLanguage = document.createElement('p');
-        movieOriginalLanguage.innerText =`Original Language: ${movie.original_language}`;
-        movieDiv.appendChild(movieOriginalLanguage);
-
-
-
-        const Genre = document.createElement('h3');
-        Genre.innerText =`Genre` ;
-        movieDiv.appendChild(Genre);
-
-
-        // if genres = array so for loop otherwise only valuw
-
-        for (let i = 0; i < movie.genres.length; i++) {
-            const movieGenres = document.createElement('p');
-            movieGenres.innerText = movie.genres[i];
-            movieDiv.appendChild(movieGenres);
+        const filterMovies = () => {
+            filteredMovies = movies.filter(movie => {
+                if(genreSelect.value && movie.genres[0] !== genreSelect.value){
+                    return false;
+                }
+                if(ratingSelect.value && movie.vote_average < ratingSelect.value){
+                    return false;
+                }
+                if(yearSelect.value && movie.release_date.slice(0,4) !== yearSelect.value){
+                    return false;
+                }
+                return true;
+                console.log(filteredMovies);
+            });
+            displayMovies();
         }
 
 
-        // extract only year from this 
-
-
-
-        const movieRuntime = document.createElement('p');
-        movieRuntime.innerText =`Runtime: ${movie.runtime} mins`;
-        movieDiv.appendChild(movieRuntime);
-
-
-        
-
-        const lineBreak = document.createElement('br');
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        movieDiv.appendChild(lineBreak);
-        
-
-
-        document.body.appendChild(movieDiv);
-
+        const displayMovies = () => {
+            let html = '';
+            filteredMovies.forEach(movie => {
+                html += `
+                <div class="movie">
+                    <h2>${movie.title}</h2>
+                    <p>Overview: ${movie.overview}</p>
+                    <p>Rating: ${movie.vote_average}</p>
+                    <p>Year: ${movie.release_date.slice(0,4)}</p>
+                    <p>Genre: ${movie.genres[0]}</p>
+                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" width="300px" alt="${movie.title}">
+            
+                </div>
+                `;
+            });
+            container.innerHTML = html;
         }
-    })
-    .catch(err => console.log(err));
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            filterMovies();
+        });
+
+        genreSelect.addEventListener('change', filterMovies);
+        ratingSelect.addEventListener('change', filterMovies);
+        yearSelect.addEventListener('change', filterMovies);
+
+        displayMovies();
+    });
+
+        
 
 
 
 
-
-</script>
+        </script>
 </body>
 </html>
