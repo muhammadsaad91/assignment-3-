@@ -107,20 +107,16 @@ button:hover {
     .then(response => response.json())
     .then(data => {
 
-        // for loop all the data show in the html file postter geners title budget original_language etc
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < data.length; i++) {
             const movie = data[i];
             console.log(movie);
-        //    create a div and append all the data in the div and make a class for the div and style it in css
 
         const movieDiv = document.createElement('div');
         movieDiv.classList.add('movie');
      
-        // overview 
 
         
-        // create a h3 tag and append the title in the h3 tag
         const movieTitle = document.createElement('h1');
         movieTitle.innerText =` ${movie.title}` ;
         movieDiv.appendChild(movieTitle);
@@ -129,12 +125,6 @@ button:hover {
         movieOverview.innerText =` ${movie.overview}` ;
         movieDiv.appendChild(movieOverview);
         
-        // tagline 
-        // const movieTagline = document.createElement('p');
-        // movieTagline.innerText =` ${movie.tagline}` ;
-        // movieDiv.appendChild(movieTagline);
-
-        // vote average 
         const movieVoteAverage = document.createElement('p');
         movieVoteAverage.innerText =`Rating: ${movie.vote_average}` ;
         movieDiv.appendChild(movieVoteAverage);
@@ -143,7 +133,6 @@ button:hover {
         movieBudget.innerText =`Budget ${movie.budget}`;
         movieDiv.appendChild(movieBudget);
           
-        // original lanuage 
         const movieOriginalLanguage = document.createElement('p');
         movieOriginalLanguage.innerText =`Original Language: ${movie.original_language}`;
         movieDiv.appendChild(movieOriginalLanguage);
@@ -162,9 +151,7 @@ button:hover {
         }
 
         
-        // create a p tag and append the budget in the p tag
 
-        //   create a line break
         const lineBreak = document.createElement('br');
         movieDiv.appendChild(lineBreak);
         movieDiv.appendChild(lineBreak);
