@@ -108,6 +108,12 @@ button:hover {
     .then(data => {
 
 
+
+        const movieForm = document.getElementById('movie-form');
+        
+
+
+
         for (let i = 0; i < data.length; i++) {
             const movie = data[i];
             console.log(movie);
@@ -125,6 +131,16 @@ button:hover {
         movieOverview.innerText =` ${movie.overview}` ;
         movieDiv.appendChild(movieOverview);
         
+        
+        
+        const movieReleaseDate = document.createElement('p');
+        movieReleaseDate.innerText =`Release Date: ${movie.release_date}`;
+        movieDiv.appendChild(movieReleaseDate);
+
+        const movieReleaseyear = document.createElement('p');
+        movieReleaseyear.innerText =`Release Year: ${movie.release_date.slice(0,4)}`;
+        movieDiv.appendChild(movieReleaseyear);
+
         const movieVoteAverage = document.createElement('p');
         movieVoteAverage.innerText =`Rating: ${movie.vote_average}` ;
         movieDiv.appendChild(movieVoteAverage);
@@ -144,11 +160,23 @@ button:hover {
         movieDiv.appendChild(Genre);
 
 
+        // if genres = array so for loop otherwise only valuw
+
         for (let i = 0; i < movie.genres.length; i++) {
             const movieGenres = document.createElement('p');
             movieGenres.innerText = movie.genres[i];
             movieDiv.appendChild(movieGenres);
         }
+
+
+        // extract only year from this 
+
+
+
+        const movieRuntime = document.createElement('p');
+        movieRuntime.innerText =`Runtime: ${movie.runtime} mins`;
+        movieDiv.appendChild(movieRuntime);
+
 
         
 
